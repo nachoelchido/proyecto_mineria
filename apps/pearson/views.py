@@ -6,7 +6,6 @@ from io import StringIO
 def pearson_v(request):
 	if(request.session.get('datos')):
 		mis_datos = request.session.get('datos')
-		del request.session['datos'] #Liberando memoria
 		datos = pd.read_json(mis_datos)
 		nombres = datos.columns.tolist()
 		print(nombres[1])

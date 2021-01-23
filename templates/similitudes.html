@@ -1,8 +1,17 @@
-{% extends 'index.html' %}
-
-{% block cuerpo %}
+{% extends 'index.html' %} {% block cuerpo %}
 <section class="carga">
-	<h2 class="pearson-h2">Similitudes de Mike Wazowski</h2>
+  <h2 class="pearson-h2">Similitudes de Mike Wazowski</h2>
+
+  <h3>Distancias Euclidianas:</h3>
+  <table>
+    {% for row in euclidiana %}
+    <tr>
+      {% for column in row %}
+      <td>{{column}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
 </section>
 
 {% endblock cuerpo %}

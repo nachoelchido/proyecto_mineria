@@ -8,7 +8,6 @@ from scipy.spatial import distance
 def similitudes_v(request):
 	if(request.session.get('datos')):
 		mis_datos = request.session.get('datos')
-		del request.session['datos'] #Liberando memoria
 		datos = pd.read_json(mis_datos)
 		del mis_datos #Liberando memoria
 		rows = len(datos.index)
@@ -22,6 +21,7 @@ def similitudes_v(request):
 				datos_temp = distance.euclidean(E1,E2)
 				lista_temp.append(datos_temp)
 		Matriz_euclidiana.append(lista_temp)
+		print(Matriz_euclidiana)
 
 		context = {'euclidiana': Matriz_euclidiana ,'nombre' : 'Nacho'}
 		return render(request,'similitudes.html',context)
