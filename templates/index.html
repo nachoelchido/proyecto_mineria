@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+	<script type="text/javascript" src="{% static 'js/apriori.js' %}"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+	</header>
+	{% block cuerpo %}
+	<section class="carga">
+		<div class="carga-tu-container">
+			<h3 class="carga-tu-archivo">
+			Carga tu archivo
+			</h3>
+		</div>
+		<p>
+			(txt, csv o xls)
+		</p>
+		<form action="" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{form}}
+			<button class="btn-enviar" type ="submit">Subir</button>
+		</form>
+	</section>
+	{% endblock cuerpo %}
+	<footer>
+		<p>Luis Ignacio Hernández Sánchez</p>
+	</footer>
+</body>
+</html>

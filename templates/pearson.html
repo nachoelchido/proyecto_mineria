@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+
+{% block cuerpo %}
+<section class="carga">
+	<h2 class="pearson-h2">Matriz de Correlaciones</h2>
+	<table class="pearson-table">
+		<tr>
+			<td></td>
+			{% for nombre in nombres %}
+			<th>
+				{{nombre}}
+			</th>
+			{% endfor %}
+		</tr>
+		{% for index,row in matriz.iterrows %}
+		<tr>
+			<th>
+				{{index}}
+			</th>
+			{% for i in row %}
+			<td>
+				{{i}}
+			</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
+	<h3>Gráfico</h3>
+	<div>
+		{{ graph|safe }}
+	</div>
+	<form action="" method="post">
+		{% csrf_token %}
+		<label for="variable-a">Variable A:</label>
+		<select name="variable-a" id="variable-a">
+			{% for nombre in nombres %}
+				{% if nombre == var_a %}
+				<option value="{{nombre}}" selected="selected">{{nombre}}</option>
+				{% else %}
+				<option value="{{nombre}}">{{nombre}}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
+		<label for="variable-b">Variable B:</label>
+		<select name="variable-b" id="variable-b">
+			<option value="" selected disabled hidden>{{var_b}}</option>
+			{% for nombre in nombres %}
+				{% if nombre == var_b %}
+				<option value="{{nombre}}" selected="selected">{{nombre}}</option>
+				{% else %}
+				<option value="{{nombre}}">{{nombre}}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
+		<input type="submit" value="Graficar">
+	</form>
+	<h3>Visualización de correlaciones</h3>
+	<div>
+		{{lineal|safe}}
+	</div>
+</section>
+
+{% endblock cuerpo %}

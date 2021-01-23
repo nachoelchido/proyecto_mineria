@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+
+{% block cuerpo %}
+	<h3 class="opciones">Configuración:</h3>
+	<table class="datos-apriori">
+		<tr>
+			<th>Soporte mínimo</th>
+			<th>Confianza</th>
+			<th>Lift</th>
+			<th>Mínimo de elementos</th>
+		</tr>
+		<tr>
+			<td>{{soporte}}</td>
+			<td>{{confianza}}%</td>
+			<td>{{lift}}</td>
+			<td>{{minimo_elementos}}</td>
+		</tr>
+	</table>
+	<h3>Resultados:</h3>
+	<table class="resultados-apriori">
+		<tr>
+			<th>Elemento A</th>
+			<th>Elemento B</th>
+			<th>Soporte</th>
+			<th>Lift</th>
+		</tr>
+		{% for row in resultados %}
+		<tr>
+			{% for column in row %}
+			<td>
+				{{column}}
+			</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock cuerpo %}
