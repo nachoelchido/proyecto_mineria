@@ -20,6 +20,7 @@ from apps.apriori.views import apriori_v
 from apps.pearson.views import pearson_v
 from apps.similitudes.views import similitudes_v
 from apps.clustering.views import clustering_v
+from apps.regresion.views import regresion_v
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,5 @@ urlpatterns = [
     path('pearson',pearson_v),
     path('similitudes',similitudes_v),
     path('clustering',clustering_v),
+    path('regresion',regresion_v),
 ]

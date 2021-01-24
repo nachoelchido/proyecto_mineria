@@ -1,0 +1,81 @@
+{% extends 'index.html' %} {% block cuerpo %} {% load static %}
+<link rel="stylesheet" href="{% static 'styles/cluster.css' %}" />
+<section class="carga">
+  <h2 class="pearson-h2">Matriz de Correlaciones</h2>
+  <table>
+    <tr>
+      <td></td>
+      {% for nombre in nombres %}
+      <th>{{nombre}}</th>
+      {% endfor %}
+    </tr>
+    {% for index,row in matriz.iterrows %}
+    <tr>
+      <th>{{index}}</th>
+      {% for i in row %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <h3>Seleccione variables:</h3>
+
+  <div>{{ grafico|safe }}</div>
+
+  <form class="cluster-form" action="" method="post">
+    <div class="cl-options">
+      {% csrf_token %} {% for nombre in nombres %}
+      <div class="box">
+        <label for="nombre">Variable:</label>
+        <select name="{{nombre}}" id="{{nombre}}">
+          {% for name in nombres %} {% if name == nombre %}
+          <option value="{{nombre}}" selected="selected">{{name}}</option>
+          {% else %}
+          <option value="{{name}}">{{name}}</option>
+          {% endif %} {% endfor %}
+          <option value="ninguna">ninguna</option>
+        </select>
+      </div>
+      {% endfor %}
+    </div>
+
+    <input class="sub" type="submit" value="¡Clusterizar!" />
+  </form>
+  <h3>Número calculado de clusters ideales: {{ideales}}</h3>
+
+  <table>
+    <tr>
+      {% for nombre in nombres %}
+      <th>{{nombre}}</th>
+      {% endfor %}
+      <th>cluterP</th>
+    </tr>
+    {% for index,row in datos.iterrows %}
+    <tr>
+      {% for i in row %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Centroides</h3>
+  <table>
+    <tr>
+      <td></td>
+      {% for centroide in centroides %}
+      <th>{{centroide}}</th>
+      {% endfor %}
+    </tr>
+    {% for index,row in centroides.iterrows %}
+    <tr>
+      <th>{{index}}</th>
+      {% for i in row %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+
+{% endblock cuerpo %}

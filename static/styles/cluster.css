@@ -1,0 +1,28 @@
+.cluster-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+  position: relative;
+}
+
+.cl-options {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.cluster-form box {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cluster-form .sub {
+  position: absolute;
+  height: 40px;
+  top: 35px;
+  left: 85%;
+}

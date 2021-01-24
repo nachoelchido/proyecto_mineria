@@ -2,6 +2,10 @@ from django.shortcuts import render,redirect
 import pandas as pd
 import matplotlib.pyplot as plt
 from io import StringIO
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.metrics import pairwise_distances_argmin_min
+from kneed import KneeLocator       #https://github.com/arvkevi/kneed/blob/master/kneed/   Utiliza una interpolación
 
 def clustering_v(request):
 	if(request.session.get('datos')):
@@ -9,43 +13,54 @@ def clustering_v(request):
 		#del request.session['datos'] #Liberando memoria
 		datos = pd.read_json(mis_datos)
 		nombres = datos.columns.tolist()
-		print(nombres[1])
 		del mis_datos #Liberando memoria
 		Matriz = datos.corr(method='pearson')
 		context = {'matriz' : Matriz.round(4), 'nombres' : nombres}
-		plt.matshow(Matriz)
+		
+		if request.method == 'POST':
+			mis_nombres = []
+			for nombre in nombres:
+				if request.POST.get(nombre) != 'ninguna':
+					mis_nombres.append(request.POST.get(nombre,'ninguna'))
+		else:
+			mis_nombres = nombres
+
+		variablesModelo = np.array(datos[mis_nombres])
+		
+		SSE = []
+		for i in range(2, 16):
+			km = KMeans(n_clusters=i, random_state=0)
+			km.fit(variablesModelo)
+			SSE.append(km.inertia_)
+
+		kl = KneeLocator(range(2, 16), SSE, curve="convex", direction="decreasing")
+		print("=================")
+		print(kl.elbow)
+
+		plt.figure(figsize=(10, 7))
+		plt.plot(range(2, 16), SSE, marker='o')
+		plt.xlabel('Cantidad de clusters *k*')
+		plt.ylabel('SSE')
+		plt.title('Elbow Method')
+
 		fig = plt.gcf()
 		imgdata = StringIO()
 		fig.savefig(imgdata, format='svg')
 		imgdata.seek(0)
 		data = imgdata.getvalue()
-		
-		if request.method == 'POST':
-			var_a = request.POST.get('variable-a','')
-			var_b = request.POST.get('variable-b','')
-		else:
-			var_a = datos.columns[0]
-			var_b = datos.columns[1]
 
-		print("*************")
-		print(var_a)
-		print(var_b)
-		print("*************")
+		MParticional = KMeans(n_clusters=kl.elbow, random_state=0).fit(variablesModelo)
+		MParticional.predict(variablesModelo)
+		MParticional.labels_
 
-		plt.clf()
-		plt.plot(datos[var_a],datos[var_b], 'bo')
-		plt.ylabel(var_a)
-		plt.xlabel(var_b)
+		datos['clusterP'] = MParticional.labels_
 
+		CentroidesP = MParticional.cluster_centers_
 
-		fig2 = plt.gcf()
-		imgdata2 = StringIO()
-		fig2.savefig(imgdata2, format='svg')
-		imgdata2.seek(0)
-		data2 = imgdata2.getvalue()
-
-		context = {'matriz' : Matriz.round(4), 'nombres' : nombres, 'graph' : data, 'lineal' : data2, 'var_a' : var_a, 'var_b' : var_b}
-		return render(request,'pearson.html',context)
+		context = {'matriz' : Matriz.round(4), 'nombres' : nombres, 'ideales':kl.elbow,
+		'datos' : datos.round(4), 'centroides':pd.DataFrame(CentroidesP.round(4)),
+		'grafico':data}
+		return render(request,'clustering.html',context)
 	else:
 			print("hoooo")
 			return redirect('/')

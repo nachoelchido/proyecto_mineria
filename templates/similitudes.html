@@ -1,17 +1,55 @@
-{% extends 'index.html' %} {% block cuerpo %}
+{% extends 'index.html' %} {% block cuerpo %} {% load static %}
+<link rel="stylesheet" href="{% static 'styles/similitudes.css' %}" />
 <section class="carga">
-  <h2 class="pearson-h2">Similitudes de Mike Wazowski</h2>
-
-  <h3>Distancias Euclidianas:</h3>
-  <table>
-    {% for row in euclidiana %}
-    <tr>
-      {% for column in row %}
-      <td>{{column}}</td>
+  <h2 class="pearson-h2">Similitudes</h2>
+  <h3>Distancias Euclidianas</h3>
+  <div class="container">
+    <table>
+      {% for row in euclidiana %}
+      <tr>
+        {% for column in row %}
+        <td>{{column}}</td>
+        {% endfor %}
+      </tr>
       {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
+    </table>
+  </div>
+  <h3>Distancias de Chebyshev</h3>
+  <div class="container">
+    <table>
+      {% for row in cheb %}
+      <tr>
+        {% for column in row %}
+        <td>{{column}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <h3>Distancias de Manhattan</h3>
+  <div class="container">
+    <table>
+      {% for row in manh %}
+      <tr>
+        {% for column in row %}
+        <td>{{column}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <h3>Distancias de Minkowski</h3>
+  <div class="container">
+    <table>
+      {% for row in mink %}
+      <tr>
+        {% for column in row %}
+        <td>{{column}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </section>
 
 {% endblock cuerpo %}

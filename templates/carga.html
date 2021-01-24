@@ -1,49 +1,64 @@
-{% extends 'index.html' %}
-
-{% block cuerpo %}
+{% extends 'index.html' %} {% block cuerpo %}
 
 <div class="menu">
-	<button class="op-algo"onclick="hideElem('apriori-opciones')">Apriori</button>
-	<a class="op-algo" href="pearson">Pearson</a>
-	<a class="op-algo" href="similitudes">Similitudes</a>
-	<a class="op-algo" href="clustering">Clustering</a>
+  <button class="op-algo" onclick="hideElem('apriori-opciones')">
+    Apriori
+  </button>
+  <a class="op-algo" href="pearson">Pearson</a>
+  <a class="op-algo" href="similitudes">Similitudes</a>
+  <a class="op-algo" href="clustering">Clustering</a>
+  <a class="op-algo" href="regresion">Regresion</a>
 </div>
-<form action="apriori" id="apriori-opciones" style="display:none" method="post" enctype="multipart/form-data">
-	{% csrf_token %}
-	<label for="soporte">Soporte mínimo:</label>
-	<input type="number" name="soporte" placeholder="soporte" min="1">
-	<label for="range">Confianza:</label>
-	<input type="range" name="range" id="rangeInput" onchange="updateTextInput(this.value);">
-	<input type="number" id="textInput" min="0" max="100" value="50" onchange="updateRangeInput(this.value);">
+<form
+  action="apriori"
+  id="apriori-opciones"
+  style="display: none"
+  method="post"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  <label for="soporte">Soporte mínimo:</label>
+  <input type="number" name="soporte" placeholder="soporte" min="1" />
+  <label for="range">Confianza:</label>
+  <input
+    type="range"
+    name="range"
+    id="rangeInput"
+    onchange="updateTextInput(this.value);"
+  />
+  <input
+    type="number"
+    id="textInput"
+    min="0"
+    max="100"
+    value="50"
+    onchange="updateRangeInput(this.value);"
+  />
 
-	<label for="lift">Lift:</label>
-	<input type="number" name="lift" placeholder="lift" min="0">
+  <label for="lift">Lift:</label>
+  <input type="number" name="lift" placeholder="lift" min="0" />
 
-	<label for="min-elem">Mínimo de elementos:</label>
-	<input type="number" name="min-elem" placeholder="elementos" min="0">
+  <label for="min-elem">Mínimo de elementos:</label>
+  <input type="number" name="min-elem" placeholder="elementos" min="0" />
 
-	<input type="submit" value="Vamos">
-	<!--
+  <input type="submit" value="Vamos" />
+  <!--
 	<a href="{% url 'apriori:apriori_v' %}">Calcular</a>
 	-->
 </form>
-	<table class="dataframe">
-		<tr>
-			{% for nombre in nombres %}
-			<th>
-				{{nombre}}
-			</th>
-			{% endfor %}
-		</tr>
-		{% for index,row in datos.iterrows %}
-		<tr>
-			{% for i in row %}
-			<td>
-				{{i}}
-			</td>
-			{% endfor %}
-		</tr>
-		{% endfor %}
-	</table>
+<table class="dataframe">
+  <tr>
+    {% for nombre in nombres %}
+    <th>{{nombre}}</th>
+    {% endfor %}
+  </tr>
+  {% for index,row in datos.iterrows %}
+  <tr>
+    {% for i in row %}
+    <td>{{i}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
 
 {% endblock cuerpo %}

@@ -21,7 +21,7 @@ def index_v(request):
 	        	Datos = pd.read_table(file)
 
 	        elif(extension in ['xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt']):
-	        	Datos = pd.read_excel(file,header=None)
+	        	Datos = pd.read_excel(file,header=0)
 
 	        nombres = Datos.columns.tolist()
 	        print(extension)

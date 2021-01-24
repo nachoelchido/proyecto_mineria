@@ -1,0 +1,109 @@
+{% extends 'index.html' %} {% block cuerpo %} {% load static %}
+<link rel="stylesheet" href="{% static 'styles/regresion.css' %}" />
+<section class="carga">
+  <h2 class="pearson-h2">Regresión Logística</h2>
+
+  <div class="container">
+    <table>
+      <tr>
+        {% for row in datos %}
+        <th>{{row}}</th>
+        {% endfor %}
+      </tr>
+      {% for index,row in datos.iterrows %}
+      <tr>
+        {% for i in row %}
+        <td>{{i}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <form class="regresion-form" action="" method="post">
+    {% csrf_token %}
+    <h3>Variables Binarias</h3>
+    <input type="text" value="{{a}}" name="variable-a" />
+    <input type="text" value="{{b}}" name="variable-b" />
+    <h3>Columna a predecir</h3>
+    <div class="cl-options">
+      <label for="nombre">Variable:</label>
+      <select name="columna" id="columna">
+        {% for row in datos %} {% if index == columna %}
+        <option value="{{row}}" selected="selected">{{row}}</option>
+        {% else %}
+        <option value="{{row}}">{{row}}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </div>
+    <h3>Variables predictorias</h3>
+    <div class="box">
+      {% for row in datos %}
+
+      <label for="{{row}}">Variable:</label>
+      <select name="{{row}}" id="{{row}}">
+        {% for name in datos %} {% if name != columna and name == row%}
+        <option value="{{row}}" selected="selected">{{row}}</option>
+        {% elif name != columna and name != row %}
+        <option value="{{name}}">{{name}}</option>
+        {% endif %} {% endfor %}
+        <option value="ninguna">ninguna</option>
+        
+      </select>
+
+      {% endfor %}
+    </div>
+    <input class="sub" type="submit" value="¡Calcular!" />
+  </form>
+
+  <h3>Probabilidades</h3>
+  <table>
+    <tr>
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+    {% for index,row in probabilidad.iterrows %}
+    <tr>
+      <th>{{index}}</th>
+      {% for i in row %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Predicciones</h3>
+  <table>
+    <tr>
+      <th></th>
+      <th>0</th>
+    </tr>
+    {% for index,row in predicciones.iterrows %}
+    <tr>
+      <th>{{index}}</th>
+      {% for i in row %}
+      <td>{{i}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <h3>Exactitud: {{exactitud}}</h3>
+
+  <h3>Reporte con Predicciones Nuevas</h3>
+  <table>
+    <tr>
+      {% for rows in reporte%}
+      <tr>
+        {% for column in rows %}
+        <td>{{column}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tr>
+  </table>
+  <h3>Exactitud Nueva: {{exactitud2}}</h3>
+
+</section>
+
+{% endblock cuerpo %}

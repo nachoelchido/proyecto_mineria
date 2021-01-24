@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.index',
     'apps.apriori',
     'apps.clustering',
+    'apps.regresion'
 ]
 
 MIDDLEWARE = [
