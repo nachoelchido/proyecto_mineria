@@ -33,7 +33,7 @@
     <label for="variable-b">Variable B:</label>
     <select name="variable-b" id="variable-b">
       <option value="" selected disabled hidden>{{var_b}}</option>
-      {% for index,row in matriz.iterrows %} {% if index == var_a %}
+      {% for index,row in matriz.iterrows %} {% if index == var_b %}
       <option value="{{index}}" selected="selected">{{index}}</option>
       {% else %}
       <option value="{{index}}">{{index}}</option>

@@ -16,12 +16,13 @@ def clustering_v(request):
 		del mis_datos #Liberando memoria
 		Matriz = datos.corr(method='pearson')
 		context = {'matriz' : Matriz.round(4), 'nombres' : nombres}
-		
+		#Se lee si se ingresaron variables (columnas) por POST
 		if request.method == 'POST':
 			mis_nombres = []
 			for nombre in nombres:
 				if request.POST.get(nombre) != 'ninguna':
 					mis_nombres.append(request.POST.get(nombre,'ninguna'))
+		#Si no se ingresaron variables, se seleccionan todas las columnas
 		else:
 			mis_nombres = nombres
 

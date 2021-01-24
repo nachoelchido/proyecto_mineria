@@ -20,7 +20,8 @@ def apriori_v(request):
 			confianza = confianza/100
 			lift = int(request.POST.get('lift',''))
 			minimo_elementos = int(request.POST.get('min-elem',''))
-		#Se ejecuta el algoritmo
+	
+		#Se ejecuta el algoritmo Apriori
 			Transacciones = []
 
 			for i in range(0, rows):
@@ -57,12 +58,6 @@ def apriori_v(request):
 			context ={'resultados' : resultados_tabla, 'soporte' : soporte, 'confianza' : confianza*100, 'lift' : lift, 'minimo_elementos' : minimo_elementos}
 			return render(request,'apriori.html',context)
 		else:
-			print("hoooo")
 			return redirect('/')
 	else:
-		print("hoooo")
 		return redirect('/')
-
-		#apriori
-		#caracteristicas de pearson
-		#metricas similitudes

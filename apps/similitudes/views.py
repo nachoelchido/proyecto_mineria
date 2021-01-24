@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from io import StringIO
 from scipy.spatial import distance
 
+#se realizan los algoritmos de similitudes
 def similitudes_v(request):
 	if(request.session.get('datos')):
 		mis_datos = request.session.get('datos')
